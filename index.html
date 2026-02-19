@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VOR | Elite Bike & Car Rentals Indore</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        body { 
+            font-family: 'Plus Jakarta Sans', sans-serif; 
+            background-color: #ffffff; 
+            color: #0f172a; 
+        }
+        
+        .premium-shadow { box-shadow: 0 25px 50px -12px rgba(225, 29, 72, 0.15); }
+        .card-hover:hover { transform: translateY(-10px); transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1); }
+        
+        .accent-gradient { background: linear-gradient(135deg, #E11D48 0%, #9F1239 100%); }
+        .text-red { color: #E11D48; }
+        
+        .glass-nav {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+        }
+
+        .reveal { opacity: 0; transform: translateY(30px); transition: all 0.7s ease-out; }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+
+        /* Smooth scrollbar */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #f8fafc; }
+        ::-webkit-scrollbar-thumb { background: #E11D48; border-radius: 10px; }
+
+        #bookingModal { display: none; }
+        #bookingModal.active { display: flex; }
+
+        .pricing-card {
+            border: 1px solid rgba(225, 29, 72, 0.1);
+        }
+    </style>
+</head>
+<body class="overflow-x-hidden selection:bg-red-600 selection:text-white">
+
+    <!-- Floating WhatsApp -->
+    <a href="https://wa.me/8889304304" target="_blank" class="fixed bottom-8 right-8 z-[100] accent-gradient text-white p-4 rounded-full shadow-2xl hover:scale-110 transition-transform active:scale-95">
+        <i data-lucide="message-circle" class="w-8 h-8"></i>
+    </a>
+
+    <!-- Top Info Bar -->
+    <div class="bg-slate-900 text-white py-2 px-6 text-[10px] font-bold uppercase tracking-[0.2em] hidden md:block">
+        <div class="max-w-7xl mx-auto flex justify-between">
+            <div class="flex gap-6">
+                <span class="flex items-center gap-1.5"><i data-lucide="map-pin" class="w-3 h-3 text-red-500"></i> Main Hub: Bhawarkua, Indore</span>
+                <span class="flex items-center gap-1.5"><i data-lucide="clock" class="w-3 h-3 text-red-500"></i> Open 24/7 for Pickups</span>
+            </div>
+            <div class="flex gap-6">
+                <span>Call Us: +91 8889304304</span>
+                <span class="text-red-500">Verified Quality • Affordable Rates</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="sticky top-0 w-full z-50 glass-nav border-b border-slate-100">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="flex justify-between h-20 items-center">
+                <div class="flex items-center gap-3">
+                    <div class="accent-gradient p-2 rounded-xl text-white">
+                        <i data-lucide="shield-check" class="w-6 h-6"></i>
+                    </div>
+                    <div class="flex flex-col">
+                        <span class="text-2xl font-black tracking-tighter text-slate-900 leading-none">VOR.</span>
+                        <span class="text-[9px] uppercase tracking-widest text-red-600 font-bold">Premium Rentals</span>
+                    </div>
+                </div>
+
+                <div class="hidden md:flex items-center space-x-10">
+                    <a href="#fleet" class="text-xs font-black text-slate-600 hover:text-red-600 transition-colors uppercase tracking-widest">The Fleet</a>
+                    <a href="#about" class="text-xs font-black text-slate-600 hover:text-red-600 transition-colors uppercase tracking-widest">About VOR</a>
+                    <a href="#policy" class="text-xs font-black text-slate-600 hover:text-red-600 transition-colors uppercase tracking-widest">Policy</a>
+                    <button onclick="toggleBookingModal()" class="accent-gradient text-white px-8 py-3 rounded-full text-xs font-black tracking-widest hover:shadow-xl transition-all">
+                        BOOK NOW
+                    </button>
+                </div>
+
+                <button class="md:hidden text-slate-900" id="mobileMenuBtn"><i data-lucide="menu" class="w-7 h-7"></i></button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative pt-20 pb-20 lg:pt-32 lg:pb-32 bg-white overflow-hidden">
+        <div class="max-w-7xl mx-auto px-6 relative z-10">
+            <div class="grid lg:grid-cols-2 gap-16 items-center">
+                <div class="reveal active">
+                    <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-red-50 text-red-600 text-[10px] font-black uppercase tracking-[0.2em] mb-8">
+                        <span class="relative flex h-2 w-2">
+                            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
+                            <span class="relative inline-flex rounded-full h-2 w-2 bg-red-600"></span>
+                        </span>
+                        Certified Premium Vehicles
+                    </div>
+                    <h1 class="text-6xl lg:text-8xl font-black text-slate-900 leading-[0.9] mb-8 tracking-tighter">
+                        Don't Just Rent. <br><span class="text-red-600">Ride Quality.</span>
+                    </h1>
+                    <p class="text-xl text-slate-500 mb-12 max-w-lg leading-relaxed font-medium">
+                        Welcome to <b>VOR (Vehicles on Rent)</b> — Indore’s trusted rental service for bikes, scooties, and cars. We provide well-maintained vehicles at pocket-friendly prices for students, travelers, and professionals.
+                    </p>
+                    <div class="flex flex-col sm:flex-row gap-5">
+                        <button onclick="document.getElementById('fleet').scrollIntoView()" class="accent-gradient text-white px-10 py-5 rounded-2xl font-black flex items-center justify-center gap-3 shadow-2xl shadow-red-200 hover:-translate-y-1 transition-all">
+                            Explore Fleet <i data-lucide="chevron-right" class="w-5 h-5"></i>
+                        </button>
+                        <button onclick="document.getElementById('about').scrollIntoView()" class="bg-slate-50 text-slate-900 px-10 py-5 rounded-2xl font-black flex items-center justify-center gap-3 border border-slate-200 hover:bg-white transition-all">
+                            Our Story
+                        </button>
+                    </div>
+                </div>
+                <div class="relative reveal delay-200">
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="space-y-4">
+                            <!-- <img src="https://images.unsplash.com/photo-1558981403-c5f91cbba527?auto=format&fit=crop&q=80&w=400" class="rounded-3xl shadow-xl w-full h-64 object-cover">
+                            <img src="https://images.unsplash.com/photo-1542362567-b05260b60c44?auto=format&fit=crop&q=80&w=400" class="rounded-3xl shadow-xl w-full h-48 object-cover"> -->
+                        </div>
+                        <div class="space-y-4 pt-8">
+                            <div class="bg-red-600 p-8 rounded-3xl text-white shadow-2xl">
+                                <p class="text-4xl font-black">500+</p>
+                                <p class="text-xs font-bold uppercase tracking-widest mt-2 opacity-80">Indore Riders Monthly</p>
+                            </div>
+                            <img src="https://images.unsplash.com/photo-1599819811279-d5ad9cccf838?auto=format&fit=crop&q=80&w=400" class="rounded-3xl shadow-xl w-full h-64 object-cover">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Quality Assurance Section -->
+    <section id="quality" class="py-24 bg-slate-50">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="grid md:grid-cols-3 gap-12">
+                <div class="reveal">
+                    <div class="flex items-center gap-4 mb-6">
+                        <div class="w-12 h-12 bg-white rounded-xl flex items-center justify-center text-red-600 shadow-sm"><i data-lucide="check-circle-2"></i></div>
+                        <h3 class="text-xl font-black text-slate-900">40-Point Check</h3>
+                    </div>
+                    <p class="text-slate-500 text-sm font-medium leading-relaxed">Our mechanics perform a multi-point inspection including brake checks, oil levels, and tire pressure before every single handover to ensure zero breakdowns on Indore roads.</p>
+                </div>
+                <div class="reveal delay-100">
+                    <div class="flex items-center gap-4 mb-6">
+                        <div class="w-12 h-12 bg-white rounded-xl flex items-center justify-center text-red-600 shadow-sm"><i data-lucide="shield"></i></div>
+                        <h3 class="text-xl font-black text-slate-900">RSA Protection</h3>
+                    </div>
+                    <p class="text-slate-500 text-sm font-medium leading-relaxed">Stuck at Rajeev Gandhi Square or Scheme 54? Our 24/7 Roadside Assistance team is just a call away for punctures, mechanical issues, or accidents.</p>
+                </div>
+                <div class="reveal delay-200">
+                    <div class="flex items-center gap-4 mb-6">
+                        <div class="w-12 h-12 bg-white rounded-xl flex items-center justify-center text-red-600 shadow-sm"><i data-lucide="droplets"></i></div>
+                        <h3 class="text-xl font-black text-slate-900">Deep Sanitized</h3>
+                    </div>
+                    <p class="text-slate-500 text-sm font-medium leading-relaxed">We use pro-level antimicrobial cleaners on all high-touch surfaces. Clean cabins, sanitized helmets, and germ-free handles are a VOR standard.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Detailed About Section -->
+    <section id="about" class="py-32 bg-white">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="grid lg:grid-cols-2 gap-20 items-center">
+                <div class="reveal">
+                    <h2 class="text-4xl font-black text-slate-900 mb-8 leading-tight">Why Indore Trusts <br><span class="text-red-600">VOR Rentals</span></h2>
+                    <div class="space-y-6 text-slate-500 font-medium text-lg leading-relaxed">
+                        <p>At <b>VOR – Vehicles on Rent</b>, we believe in making travel convenient, affordable, and stress-free. Based in Bhawarkua, the heart of Indore's student hub, we specialize in serving the specific needs of our city.</p>
+                        <p>Whether you're a student looking for a fuel-efficient scooty for daily classes, a professional needing a reliable bike for client meetings, or a family planning a weekend trip to <b>Mandu, Ujjain, or Maheshwar</b>, we have the perfect ride for you.</p>
+                        <ul class="space-y-4 pt-4">
+                            <li class="flex items-center gap-3 text-slate-900 font-bold"><i data-lucide="check" class="text-green-500"></i> Affordable daily, weekly & monthly packages</li>
+                            <li class="flex items-center gap-3 text-slate-900 font-bold"><i data-lucide="check" class="text-green-500"></i> Doorstep delivery & multiple pickup hubs</li>
+                            <li class="flex items-center gap-3 text-slate-900 font-bold"><i data-lucide="check" class="text-green-500"></i> Latest 2024 models with high mileage</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="bg-slate-900 rounded-[3rem] p-12 text-white reveal delay-100">
+                    <h3 class="text-2xl font-black mb-6">Our Fleet Promise</h3>
+                    <div class="space-y-8">
+                        <div class="flex gap-6">
+                            <div class="text-red-500 shrink-0"><i data-lucide="bike" class="w-8 h-8"></i></div>
+                            <div>
+                                <h4 class="font-bold mb-2">Scooties & Bikes</h4>
+                                <p class="text-sm text-slate-400">Excellent for city traffic. Includes two sanitized helmets. Perfect for students and daily commuters.</p>
+                            </div>
+                        </div>
+                        <div class="flex gap-6">
+                            <div class="text-red-500 shrink-0"><i data-lucide="car" class="w-8 h-8"></i></div>
+                            <div>
+                                <h4 class="font-bold mb-2">Luxury & Utility Cars</h4>
+                                <p class="text-sm text-slate-400">Manual and Automatic options with powerful AC. Ideal for family trips, airport pickups, and corporate needs.</p>
+                            </div>
+                        </div>
+                        <div class="pt-6 border-t border-white/10">
+                            <p class="text-xs font-bold text-red-500 uppercase tracking-widest mb-2">Direct Hub Support</p>
+                            <p class="text-xl font-black">Call: +91 8889304304</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Fleet Section -->
+    <section id="fleet" class="py-32 bg-slate-50">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="flex flex-col md:flex-row md:items-end justify-between mb-20 reveal">
+                <div>
+                    <h2 class="text-5xl font-black text-slate-900 mb-6 tracking-tight">The Premium Fleet.</h2>
+                    <p class="text-slate-500 font-bold uppercase text-xs tracking-[0.2em]">All Vehicles include Comprehensive Insurance & RSA</p>
+                </div>
+                <div class="mt-8 md:mt-0 flex p-1 bg-slate-200 rounded-xl">
+                    <button onclick="filterFleet('all')" class="fleet-btn active px-8 py-2.5 rounded-lg text-xs font-black uppercase tracking-widest bg-white shadow-sm text-red-600">All</button>
+                    <button onclick="filterFleet('bike')" class="fleet-btn px-8 py-2.5 rounded-lg text-xs font-black uppercase tracking-widest text-slate-400">Bikes</button>
+                    <button onclick="filterFleet('car')" class="fleet-btn px-8 py-2.5 rounded-lg text-xs font-black uppercase tracking-widest text-slate-400">Cars</button>
+                </div>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-10">
+                <!-- TVS Jupiter Card -->
+                <div class="vehicle-card bike reveal" data-type="bike">
+                    <div class="bg-white rounded-[2.5rem] border border-slate-100 overflow-hidden card-hover premium-shadow">
+                        <div class="relative h-64 bg-slate-50">
+                            <img src="https://images.unsplash.com/photo-1444491741275-3747c53c99b4?auto=format&fit=crop&q=80&w=600" class="w-full h-full object-cover">
+                            <div class="absolute top-6 left-6 bg-green-500 text-white text-[10px] font-black px-3 py-1 rounded-full uppercase">Pay at Pickup Available</div>
+                        </div>
+                        <div class="p-10">
+                            <div class="flex justify-between items-start mb-6">
+                                <div>
+                                    <h3 class="text-2xl font-black text-slate-900">TVS Jupiter</h3>
+                                    <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mt-1">Automatic • Scooty</p>
+                                </div>
+                                <div class="text-right">
+                                    <p class="text-3xl font-black text-red-600 leading-none">₹399</p>
+                                    <p class="text-[8px] font-black text-slate-400 uppercase tracking-widest mt-1">Per Day</p>
+                                </div>
+                            </div>
+                            <p class="text-sm text-slate-500 font-medium mb-6 leading-relaxed">
+                                Lightweight and easy to ride in city traffic. <b>Best for:</b> Student commutes & grocery runs.
+                            </p>
+                            <div class="grid grid-cols-2 gap-4 mb-8 pt-6 border-t border-slate-50">
+                                <div class="text-[10px] font-bold text-slate-500 uppercase"><i data-lucide="calendar" class="inline w-3 h-3 mr-1 text-red-500"></i> Year: 2024</div>
+                                <div class="text-[10px] font-bold text-slate-500 uppercase"><i data-lucide="lock" class="inline w-3 h-3 mr-1 text-red-500"></i> Deposit: ₹500</div>
+                                <div class="text-[10px] font-bold text-slate-500 uppercase"><i data-lucide="zap" class="inline w-3 h-3 mr-1 text-red-500"></i> Helmets Incl.</div>
+                                <div class="text-[10px] font-bold text-slate-500 uppercase"><i data-lucide="map-pin" class="inline w-3 h-3 mr-1 text-red-500"></i> Hub: Bhawarkua</div>
+                            </div>
+                            <button onclick="toggleBookingModal('TVS Jupiter')" class="w-full py-5 accent-gradient text-white rounded-2xl font-black uppercase tracking-widest text-xs shadow-xl shadow-red-100">Rent This Ride</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- RE Classic Card -->
+                <div class="vehicle-card bike reveal delay-100" data-type="bike">
+                    <div class="bg-white rounded-[2.5rem] border border-slate-100 overflow-hidden card-hover premium-shadow">
+                        <div class="relative h-64 bg-slate-50">
+                            <img src="https://images.unsplash.com/photo-1599819811279-d5ad9cccf838?auto=format&fit=crop&q=80&w=600" class="w-full h-full object-cover">
+                            <div class="absolute top-6 left-6 bg-slate-900 text-white text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-widest">Cruiser Elite</div>
+                        </div>
+                        <div class="p-10">
+                            <div class="flex justify-between items-start mb-6">
+                                <div>
+                                    <h3 class="text-2xl font-black text-slate-900">RE Classic 350</h3>
+                                    <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mt-1">Manual • 350cc</p>
+                                </div>
+                                <div class="text-right">
+                                    <p class="text-3xl font-black text-red-600 leading-none">₹1,299</p>
+                                    <p class="text-[8px] font-black text-slate-400 uppercase tracking-widest mt-1">Per Day</p>
+                                </div>
+                            </div>
+                            <p class="text-sm text-slate-500 font-medium mb-6 leading-relaxed">
+                                The iconic thump and unmatched comfort. <b>Best for:</b> Long rides to Mandu or Omkareshwar.
+                            </p>
+                            <div class="grid grid-cols-2 gap-4 mb-8 pt-6 border-t border-slate-50">
+                                <div class="text-[10px] font-bold text-slate-500 uppercase"><i data-lucide="calendar" class="inline w-3 h-3 mr-1 text-red-500"></i> Year: 2023</div>
+                                <div class="text-[10px] font-bold text-slate-500 uppercase"><i data-lucide="lock" class="inline w-3 h-3 mr-1 text-red-500"></i> Deposit: ₹2,000</div>
+                                <div class="text-[10px] font-bold text-slate-500 uppercase"><i data-lucide="gauge" class="inline w-3 h-3 mr-1 text-red-500"></i> 40 kmpl</div>
+                                <div class="text-[10px] font-bold text-slate-500 uppercase"><i data-lucide="map-pin" class="inline w-3 h-3 mr-1 text-red-500"></i> Hub: Vijay Nagar</div>
+                            </div>
+                            <button onclick="toggleBookingModal('RE Classic 350')" class="w-full py-5 accent-gradient text-white rounded-2xl font-black uppercase tracking-widest text-xs shadow-xl shadow-red-100">Rent This Ride</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Mahindra Thar Card -->
+                <div class="vehicle-card car reveal delay-200" data-type="car">
+                    <div class="bg-white rounded-[2.5rem] border border-slate-100 overflow-hidden card-hover premium-shadow">
+                        <div class="relative h-64 bg-slate-50">
+                            <img src="https://images.unsplash.com/photo-1623194002626-d621648a73b2?auto=format&fit=crop&q=80&w=600" class="w-full h-full object-cover">
+                            <div class="absolute top-6 left-6 bg-slate-900 text-white text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-widest">King of Roads</div>
+                        </div>
+                        <div class="p-10">
+                            <div class="flex justify-between items-start mb-6">
+                                <div>
+                                    <h3 class="text-2xl font-black text-slate-900">Mahindra Thar</h3>
+                                    <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mt-1">4x4 • Diesel</p>
+                                </div>
+                                <div class="text-right">
+                                    <p class="text-3xl font-black text-red-600 leading-none">₹4,500</p>
+                                    <p class="text-[8px] font-black text-slate-400 uppercase tracking-widest mt-1">Per Day</p>
+                                </div>
+                            </div>
+                            <p class="text-sm text-slate-500 font-medium mb-6 leading-relaxed">
+                                Ultimate SUV for style and rugged terrain. <b>Best for:</b> High-status arrival or forest getaways.
+                            </p>
+                            <div class="grid grid-cols-2 gap-4 mb-8 pt-6 border-t border-slate-50">
+                                <div class="text-[10px] font-bold text-slate-500 uppercase"><i data-lucide="calendar" class="inline w-3 h-3 mr-1 text-red-500"></i> Year: 2024</div>
+                                <div class="text-[10px] font-bold text-slate-500 uppercase"><i data-lucide="lock" class="inline w-3 h-3 mr-1 text-red-500"></i> Deposit: ₹5,000</div>
+                                <div class="text-[10px] font-bold text-slate-500 uppercase"><i data-lucide="users" class="inline w-3 h-3 mr-1 text-red-500"></i> 4 Seater</div>
+                                <div class="text-[10px] font-bold text-slate-500 uppercase"><i data-lucide="snowflake" class="inline w-3 h-3 mr-1 text-red-500"></i> AC Incl.</div>
+                            </div>
+                            <button onclick="toggleBookingModal('Mahindra Thar')" class="w-full py-5 accent-gradient text-white rounded-2xl font-black uppercase tracking-widest text-xs shadow-xl shadow-red-100">Rent This Ride</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Detailed Policy Grid -->
+    <section id="policy" class="py-32 bg-slate-900 text-white">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-20 reveal">
+                <h2 class="text-4xl font-black mb-4 uppercase tracking-tight">Transparent Rental Terms</h2>
+                <p class="text-slate-400 font-medium">Professional policies built on trust and clarity.</p>
+            </div>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="p-10 bg-white/5 rounded-[2.5rem] border border-white/10 reveal">
+                    <div class="flex items-center gap-4 mb-6">
+                        <i data-lucide="clock" class="text-red-500 w-8 h-8"></i>
+                        <h4 class="text-lg font-bold">Late Returns</h4>
+                    </div>
+                    <p class="text-sm text-slate-400 leading-relaxed">Vehicles must be returned at the agreed time. Late return charge: <b>₹200 per hour</b> (Bike) / <b>₹500 per hour</b> (Car). 30-min grace allowed.</p>
+                </div>
+                <div class="p-10 bg-white/5 rounded-[2.5rem] border border-white/10 reveal delay-100">
+                    <div class="flex items-center gap-4 mb-6">
+                        <i data-lucide="fuel" class="text-red-500 w-8 h-8"></i>
+                        <h4 class="text-lg font-bold">Fuel Policy</h4>
+                    </div>
+                    <p class="text-sm text-slate-400 leading-relaxed">We provide a full/partial tank. Fuel level must match pickup level at return. If lower, actual fuel cost + service fee applies.</p>
+                </div>
+                <div class="p-10 bg-white/5 rounded-[2.5rem] border border-white/10 reveal delay-200">
+                    <div class="flex items-center gap-4 mb-6">
+                        <i data-lucide="alert-circle" class="text-red-500 w-8 h-8"></i>
+                        <h4 class="text-lg font-bold">Damage Rules</h4>
+                    </div>
+                    <p class="text-sm text-slate-400 leading-relaxed">Minor scratches are inspected fairly. Any major damage or part replacement costs will be charged as per official authorized showroom estimates.</p>
+                </div>
+                <div class="p-10 bg-white/5 rounded-[2.5rem] border border-white/10 reveal delay-300">
+                    <div class="flex items-center gap-4 mb-6">
+                        <i data-lucide="rotate-ccw" class="text-red-500 w-8 h-8"></i>
+                        <h4 class="text-lg font-bold">Refunds</h4>
+                    </div>
+                    <p class="text-sm text-slate-400 leading-relaxed">Cancellation before 24 hours: <b>100% refund</b>. Within 12 hours: <b>50% refund</b>. No refund after pickup or for no-shows.</p>
+                </div>
+                <div class="p-10 bg-white/5 rounded-[2.5rem] border border-white/10 reveal delay-400">
+                    <div class="flex items-center gap-4 mb-6">
+                        <i data-lucide="user-check" class="text-red-500 w-8 h-8"></i>
+                        <h4 class="text-lg font-bold">KYC Mandatory</h4>
+                    </div>
+                    <p class="text-sm text-slate-400 leading-relaxed">Original Driving License (DL) and Aadhar Card are mandatory. We perform digital verification before handing over the keys.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Support -->
+    <section class="py-32 px-6">
+        <div class="max-w-5xl mx-auto accent-gradient rounded-[3.5rem] p-16 text-center text-white relative overflow-hidden shadow-2xl reveal">
+            <div class="relative z-10">
+                <h2 class="text-5xl font-black mb-8 tracking-tighter uppercase leading-none">Ready for Indore's <br>Best Ride?</h2>
+                <p class="text-lg mb-12 opacity-90 font-medium">Apni ride choose karein — Sahi daam, aasaan booking. <br>Cars aur bikes ko daily/weekly hire pe book karein.</p>
+                <div class="flex flex-col sm:flex-row justify-center gap-6">
+                    <a href="https://wa.me/8889304304" target="_blank" class="bg-white text-red-600 px-10 py-5 rounded-2xl font-black text-lg flex items-center justify-center gap-3 hover:scale-105 transition shadow-2xl">
+                        <i data-lucide="message-circle" class="w-6 h-6"></i> WhatsApp Booking
+                    </a>
+                    <a href="tel:8889304304" class="bg-slate-900/20 backdrop-blur text-white border border-white/30 px-10 py-5 rounded-2xl font-black text-lg flex items-center justify-center gap-3 hover:bg-white/10 transition">
+                        <i data-lucide="phone" class="w-6 h-6"></i> Call Now
+                    </a>
+                </div>
+                <p class="mt-8 opacity-80 font-bold text-xs uppercase tracking-[0.2em]">Available Hubs: Bhawarkua • Vijay Nagar • LIG Square • Indore Station</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-slate-50 pt-24 pb-12 border-t border-slate-200">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="grid lg:grid-cols-4 gap-16 mb-20">
+                <div class="col-span-2">
+                    <div class="flex items-center gap-3 mb-8">
+                        <div class="accent-gradient p-2 rounded-xl text-white">
+                            <i data-lucide="shield-check" class="w-6 h-6"></i>
+                        </div>
+                        <span class="text-2xl font-black tracking-tighter text-slate-900 leading-none">VOR.</span>
+                    </div>
+                    <p class="text-slate-500 font-medium max-w-sm mb-10 leading-relaxed">
+                        Indore's trusted rental service specializing in late-model bikes and luxury cars. We bridge the gap between affordability and premium quality.
+                    </p>
+                    <div class="flex gap-4">
+                        <a href="#" class="w-12 h-12 bg-white rounded-xl flex items-center justify-center border border-slate-200 hover:text-red-600 transition shadow-sm"><i data-lucide="instagram"></i></a>
+                        <a href="#" class="w-12 h-12 bg-white rounded-xl flex items-center justify-center border border-slate-200 hover:text-red-600 transition shadow-sm"><i data-lucide="facebook"></i></a>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="text-sm font-black uppercase tracking-widest text-slate-900 mb-8">Quick Links</h4>
+                    <ul class="space-y-4 text-sm font-bold text-slate-500 uppercase tracking-wider">
+                        <li><a href="#fleet" class="hover:text-red-600 transition">Our Fleet</a></li>
+                        <li><a href="#about" class="hover:text-red-600 transition">About VOR</a></li>
+                        <li><a href="#policy" class="hover:text-red-600 transition">Return Policy</a></li>
+                        <li><a href="#policy" class="hover:text-red-600 transition">Terms of Service</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-sm font-black uppercase tracking-widest text-slate-900 mb-8">Support Hub</h4>
+                    <ul class="space-y-4 text-sm font-bold text-slate-500 leading-relaxed uppercase tracking-wider">
+                        <li class="flex items-start gap-3"><i data-lucide="map-pin" class="w-4 h-4 text-red-500"></i> Bhawarkua Square, Indore</li>
+                        <li class="flex items-center gap-3"><i data-lucide="phone" class="w-4 h-4 text-red-500"></i> +91 8889304304</li>
+                        <li class="flex items-center gap-3"><i data-lucide="mail" class="w-4 h-4 text-red-500"></i> vor.rentals@gmail.com</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="pt-12 border-t border-slate-200">
+                <p class="text-center text-[10px] font-black text-slate-400 uppercase tracking-widest">
+                    &copy; 2026 Vehicles On Rent (VOR) — Built with heart in Indore. All Rights Reserved.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Booking Modal -->
+    <div id="bookingModal" class="fixed inset-0 z-[100] items-center justify-center px-4 bg-slate-900/90 backdrop-blur-md">
+        <div class="bg-white rounded-[3rem] w-full max-w-lg overflow-hidden relative shadow-2xl p-10">
+            <button onclick="toggleBookingModal()" class="absolute top-8 right-8 p-2 bg-slate-50 rounded-full hover:bg-red-50 hover:text-red-600 transition"><i data-lucide="x" class="w-5 h-5"></i></button>
+            <h3 class="text-2xl font-black mb-2 uppercase tracking-tight">Reserve Your Ride</h3>
+            <p id="selectedRide" class="text-red-600 font-bold uppercase text-[10px] tracking-widest mb-8">Selected: Premium Vehicle</p>
+            <form onsubmit="handleBooking(event)" class="space-y-4">
+                <div class="space-y-1">
+                    <label class="text-[9px] font-black text-slate-400 ml-4 uppercase tracking-widest">Full Name</label>
+                    <input type="text" placeholder="As per Aadhar Card" required class="w-full px-6 py-4 bg-slate-50 rounded-2xl border-none outline-none font-bold text-slate-900 focus:ring-2 focus:ring-red-500 transition">
+                </div>
+                <div class="space-y-1">
+                    <label class="text-[9px] font-black text-slate-400 ml-4 uppercase tracking-widest">Mobile Number</label>
+                    <input type="tel" placeholder="Active WhatsApp Number" required class="w-full px-6 py-4 bg-slate-50 rounded-2xl border-none outline-none font-bold text-slate-900 focus:ring-2 focus:ring-red-500 transition">
+                </div>
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="space-y-1">
+                        <label class="text-[9px] font-black text-slate-400 ml-4 uppercase tracking-widest">Pickup Date</label>
+                        <input type="date" required class="w-full px-6 py-4 bg-slate-50 rounded-2xl border-none outline-none font-bold focus:ring-2 focus:ring-red-500 transition">
+                    </div>
+                    <div class="space-y-1">
+                        <label class="text-[9px] font-black text-slate-400 ml-4 uppercase tracking-widest">Rent Duration</label>
+                        <input type="number" min="1" value="1" required class="w-full px-6 py-4 bg-slate-50 rounded-2xl border-none outline-none font-bold focus:ring-2 focus:ring-red-500 transition">
+                    </div>
+                </div>
+                <button type="submit" class="w-full accent-gradient text-white py-5 rounded-2xl font-black uppercase tracking-[0.2em] text-sm shadow-xl mt-6 active:scale-95 transition-all">Confirm Booking</button>
+                <p class="text-[9px] text-center text-slate-400 font-bold uppercase mt-4">By booking, you agree to our documentation verification rules.</p>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        lucide.createIcons();
+
+        // Reveal animations
+        const obs = new IntersectionObserver((entries) => {
+            entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('active'); });
+        }, { threshold: 0.1 });
+        document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+        // Filter
+        function filterFleet(type) {
+            const btns = document.querySelectorAll('.fleet-btn');
+            btns.forEach(b => {
+                b.classList.remove('active', 'bg-white', 'shadow-sm', 'text-red-600');
+                b.classList.add('text-slate-400');
+            });
+            event.target.classList.add('active', 'bg-white', 'shadow-sm', 'text-red-600');
+            event.target.classList.remove('text-slate-400');
+
+            document.querySelectorAll('.vehicle-card').forEach(c => {
+                if (type === 'all' || c.dataset.type === type) {
+                    c.style.display = 'block';
+                    setTimeout(() => c.style.opacity = '1', 50);
+                } else {
+                    c.style.opacity = '0';
+                    setTimeout(() => c.style.display = 'none', 300);
+                }
+            });
+        }
+
+        // Modal
+        function toggleBookingModal(name) {
+            const m = document.getElementById('bookingModal');
+            m.classList.toggle('active');
+            if(name) document.getElementById('selectedRide').innerText = "Selected: " + name;
+        }
+
+        function handleBooking(e) {
+            e.preventDefault();
+            toggleBookingModal();
+            const btn = e.target.querySelector('button');
+            btn.innerText = "Processing...";
+            setTimeout(() => {
+                window.open(`https://wa.me/8889304304?text=Hi VOR Indore, I want to book a ${document.getElementById('selectedRide').innerText.replace('Selected: ', '')}. Please guide me with the availability.`);
+            }, 500);
+        }
+    </script>
+</body>
+</html>

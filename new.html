@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Indore Rental Hub | Bikes, Scooters & Cars</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            scroll-behavior: smooth;
+        }
+        h1, h2, h3, .heading-font {
+            font-family: 'Poppins', sans-serif;
+        }
+        .brand-red { background-color: #dc2626; }
+        .brand-text-red { color: #dc2626; }
+        .brand-dark { background-color: #111827; }
+        .card-shadow { box-shadow: 0 4px 25px rgba(220, 38, 38, 0.08); }
+        .sticky-cta { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); z-index: 50; }
+        
+        /* Custom scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; }
+        ::-webkit-scrollbar-thumb { background: #dc2626; border-radius: 10px; }
+        
+        .modal-overlay {
+            background-color: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(4px);
+            display: none;
+        }
+        .modal-active { display: flex; }
+
+        #mobile-menu {
+            transition: transform 0.3s ease-in-out;
+            transform: translateX(100%);
+        }
+        #mobile-menu.active {
+            transform: translateX(0);
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-900">
+
+    <!-- Navigation -->
+    <nav class="bg-white border-b sticky top-0 z-40">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+                <div class="flex items-center gap-2">
+                    <div class="brand-red p-2 rounded-lg shadow-lg shadow-red-200">
+                        <i data-lucide="navigation" class="w-6 h-6 text-white"></i>
+                    </div>
+                    <span class="text-xl font-bold tracking-tight">INDORE<span class="brand-text-red">RENTAL</span></span>
+                </div>
+                <div class="hidden md:flex space-x-8 font-medium text-sm">
+                    <a href="#vehicles" class="hover:text-red-600 transition">Our Vehicles</a>
+                    <a href="#how-it-works" class="hover:text-red-600 transition">How it Works</a>
+                    <a href="#pricing" class="hover:text-red-600 transition">Pricing</a>
+                    <a href="#contact" class="hover:text-red-600 transition">Contact</a>
+                </div>
+                <div class="flex items-center gap-4">
+                    <button onclick="openBookingModal('General')" class="hidden sm:block brand-red text-white px-5 py-2 rounded-full font-semibold text-sm hover:bg-red-700 hover:shadow-lg transition">Book Now</button>
+                    <button class="md:hidden p-2 text-gray-600" id="mobile-menu-btn" aria-label="Open Menu">
+                        <i data-lucide="menu" class="w-6 h-6"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu Overlay -->
+    <div id="mobile-menu" class="fixed inset-y-0 right-0 w-64 bg-white shadow-2xl z-50 md:hidden flex flex-col p-6">
+        <div class="flex justify-between items-center mb-8">
+            <span class="font-bold text-lg">Menu</span>
+            <button id="close-menu-btn" class="p-2 hover:bg-gray-100 rounded-full transition">
+                <i data-lucide="x" class="w-6 h-6"></i>
+            </button>
+        </div>
+        <div class="flex flex-col gap-6 font-semibold">
+            <a href="#vehicles" class="mobile-link text-gray-600 hover:text-red-600">Our Vehicles</a>
+            <a href="#how-it-works" class="mobile-link text-gray-600 hover:text-red-600">How it Works</a>
+            <a href="#pricing" class="mobile-link text-gray-600 hover:text-red-600">Pricing</a>
+            <a href="#contact" class="mobile-link text-gray-600 hover:text-red-600">Contact</a>
+            <button onclick="openBookingModal('General')" class="brand-red text-white py-3 rounded-xl shadow-lg shadow-red-100">Book Your Ride</button>
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="relative bg-white overflow-hidden py-12 md:py-24">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center">
+            <div class="w-full md:w-1/2 z-10 text-center md:text-left">
+                <h1 class="text-4xl md:text-6xl font-bold leading-tight text-gray-900 mb-4">
+                    Rent Cars, Bikes & <br>
+                    <span class="brand-text-red">Scooty in Indore</span>
+                </h1>
+                <p class="text-lg text-gray-600 mb-8 max-w-md mx-auto md:mx-0">
+                    Affordable. Fast. Trusted. Explore the cleanest city of India on your own terms.
+                </p>
+
+                <!-- Search Box -->
+                <div class="bg-white p-6 rounded-2xl shadow-2xl border border-gray-100 max-w-xl mx-auto md:mx-0">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="space-y-1 text-left">
+                            <label class="text-xs font-bold uppercase text-gray-400">Pickup Location</label>
+                            <select class="w-full p-3 bg-gray-50 rounded-lg border border-gray-100 focus:ring-2 focus:ring-red-400 outline-none">
+                                <option>Vijay Nagar, Indore</option>
+                                <option>Bhawarkua, Indore</option>
+                                <option>Railway Station, Indore</option>
+                                <option>Airport, Indore</option>
+                                <option>Rajwada, Indore</option>
+                            </select>
+                        </div>
+                        <div class="space-y-1 text-left">
+                            <label class="text-xs font-bold uppercase text-gray-400">Vehicle Type</label>
+                            <select class="w-full p-3 bg-gray-50 rounded-lg border border-gray-100 focus:ring-2 focus:ring-red-400 outline-none">
+                                <option>All Vehicles</option>
+                                <option>Scooters</option>
+                                <option>Bikes</option>
+                                <option>Cars</option>
+                            </select>
+                        </div>
+                        <div class="space-y-1 text-left">
+                            <label class="text-xs font-bold uppercase text-gray-400">Pickup Date</label>
+                            <input type="date" class="w-full p-3 bg-gray-50 rounded-lg border border-gray-100 focus:ring-2 focus:ring-red-400 outline-none">
+                        </div>
+                        <div class="space-y-1 text-left">
+                            <label class="text-xs font-bold uppercase text-gray-400">Duration</label>
+                            <select class="w-full p-3 bg-gray-50 rounded-lg border border-gray-100 focus:ring-2 focus:ring-red-400 outline-none">
+                                <option>1 Day</option>
+                                <option>3 Days</option>
+                                <option>1 Week</option>
+                                <option>1 Month</option>
+                            </select>
+                        </div>
+                    </div>
+                    <button class="w-full mt-6 brand-red text-white py-4 rounded-xl font-bold text-lg flex items-center justify-center gap-2 hover:bg-red-700 transition shadow-lg shadow-red-200">
+                        <i data-lucide="search" class="w-5 h-5"></i> Find Your Ride
+                    </button>
+                </div>
+            </div>
+            
+            <div class="w-full md:w-1/2 mt-12 md:mt-0 relative flex justify-center">
+                <div class="absolute inset-0 bg-red-50 rounded-full blur-3xl opacity-60 scale-75"></div>
+                <svg width="400" height="400" viewBox="0 0 512 512" class="relative z-10 drop-shadow-2xl">
+                    <rect x="150" y="380" width="60" height="20" rx="10" fill="#374151"/>
+                    <rect x="350" y="380" width="60" height="20" rx="10" fill="#374151"/>
+                    <path d="M100,400 Q100,320 200,320 L350,320 Q450,320 450,400" fill="none" stroke="#dc2626" stroke-width="40"/>
+                    <circle cx="150" cy="400" r="40" fill="#1f2937"/>
+                    <circle cx="360" cy="400" r="40" fill="#1f2937"/>
+                    <rect x="180" y="220" width="200" height="100" rx="20" fill="#dc2626"/>
+                    <rect x="340" y="180" width="10" height="80" fill="#1f2937"/>
+                    <circle cx="380" cy="180" r="15" fill="#dc2626"/>
+                    <path d="M220 250 L340 250" stroke="white" stroke-width="10" stroke-linecap="round" opacity="0.3"/>
+                </svg>
+            </div>
+        </div>
+    </section>
+
+    <!-- Vehicles Section -->
+    <section id="vehicles" class="py-20 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row justify-between items-end mb-12 gap-4 text-center md:text-left">
+                <div>
+                    <h2 class="text-3xl font-bold mb-2 text-gray-900">Our Popular Vehicles</h2>
+                    <p class="text-gray-500">Choose from a wide range of sanitized and well-maintained rides.</p>
+                </div>
+                <div class="flex gap-2 mx-auto md:mx-0">
+                    <button class="bg-white px-4 py-2 rounded-full border border-gray-200 text-sm font-medium hover:bg-red-50 hover:border-red-200 transition">Scooters</button>
+                    <button class="bg-white px-4 py-2 rounded-full border border-gray-200 text-sm font-medium hover:bg-red-50 hover:border-red-200 transition">Bikes</button>
+                    <button class="bg-white px-4 py-2 rounded-full border border-gray-200 text-sm font-medium hover:bg-red-50 hover:border-red-200 transition">Cars</button>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- Vehicle Card 1 -->
+                <div class="bg-white rounded-3xl overflow-hidden card-shadow border border-gray-100 group transition hover:-translate-y-2">
+                    <div class="h-48 bg-gray-50 relative flex items-center justify-center">
+                        <span class="absolute top-4 left-4 bg-green-500 text-white text-[10px] font-bold px-2 py-1 rounded-full uppercase tracking-tighter">Available</span>
+                        <i data-lucide="bike" class="w-24 h-24 text-gray-200 group-hover:text-red-600 transition-colors duration-300"></i>
+                    </div>
+                    <div class="p-6 text-center lg:text-left">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="font-bold text-lg">Honda Activa 6G</h3>
+                            <span class="text-xs bg-gray-100 text-gray-500 px-2 py-1 rounded font-medium">Petrol</span>
+                        </div>
+                        <p class="text-gray-500 text-sm mb-4">Perfect for navigating Indore's traffic with ease.</p>
+                        <div class="flex justify-between items-center mt-4 pt-4 border-t border-gray-50">
+                            <div>
+                                <span class="text-2xl font-bold brand-text-red">₹399</span>
+                                <span class="text-gray-400 text-xs">/day</span>
+                            </div>
+                            <button onclick="openBookingModal('Honda Activa 6G')" class="brand-red text-white p-3 rounded-xl hover:shadow-lg transition">
+                                <i data-lucide="chevron-right" class="w-5 h-5"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Vehicle Card 2 -->
+                <div class="bg-white rounded-3xl overflow-hidden card-shadow border border-gray-100 group transition hover:-translate-y-2">
+                    <div class="h-48 bg-gray-50 relative flex items-center justify-center">
+                        <i data-lucide="bike" class="w-24 h-24 text-gray-200 group-hover:text-red-600 transition-colors duration-300"></i>
+                    </div>
+                    <div class="p-6 text-center lg:text-left">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="font-bold text-lg">TVS Ntorq 125</h3>
+                            <span class="text-xs bg-gray-100 text-gray-500 px-2 py-1 rounded font-medium">Petrol</span>
+                        </div>
+                        <p class="text-gray-500 text-sm mb-4">Stylish performance and smart connectivity features.</p>
+                        <div class="flex justify-between items-center mt-4 pt-4 border-t border-gray-50">
+                            <div>
+                                <span class="text-2xl font-bold brand-text-red">₹449</span>
+                                <span class="text-gray-400 text-xs">/day</span>
+                            </div>
+                            <button onclick="openBookingModal('TVS Ntorq 125')" class="brand-red text-white p-3 rounded-xl hover:shadow-lg transition">
+                                <i data-lucide="chevron-right" class="w-5 h-5"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Vehicle Card 3 -->
+                <div class="bg-white rounded-3xl overflow-hidden card-shadow border border-gray-100 group transition hover:-translate-y-2">
+                    <div class="h-48 bg-gray-50 relative flex items-center justify-center">
+                        <i data-lucide="car" class="w-24 h-24 text-gray-200 group-hover:text-red-600 transition-colors duration-300"></i>
+                    </div>
+                    <div class="p-6 text-center lg:text-left">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="font-bold text-lg">Maruti Swift</h3>
+                            <span class="text-xs bg-gray-100 text-gray-500 px-2 py-1 rounded font-medium">Diesel/P</span>
+                        </div>
+                        <p class="text-gray-500 text-sm mb-4">Comfortable 5-seater for family outings or group trips.</p>
+                        <div class="flex justify-between items-center mt-4 pt-4 border-t border-gray-50">
+                            <div>
+                                <span class="text-2xl font-bold brand-text-red">₹1,499</span>
+                                <span class="text-gray-400 text-xs">/day</span>
+                            </div>
+                            <button onclick="openBookingModal('Maruti Swift')" class="brand-red text-white p-3 rounded-xl hover:shadow-lg transition">
+                                <i data-lucide="chevron-right" class="w-5 h-5"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Vehicle Card 4 -->
+                <div class="bg-white rounded-3xl overflow-hidden card-shadow border border-gray-100 group transition hover:-translate-y-2">
+                    <div class="h-48 bg-gray-50 relative flex items-center justify-center">
+                        <i data-lucide="car" class="w-24 h-24 text-gray-200 group-hover:text-red-600 transition-colors duration-300"></i>
+                    </div>
+                    <div class="p-6 text-center lg:text-left">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="font-bold text-lg">Hyundai i20</h3>
+                            <span class="text-xs bg-gray-100 text-gray-500 px-2 py-1 rounded font-medium">Petrol</span>
+                        </div>
+                        <p class="text-gray-500 text-sm mb-4">Premium hatchback for a smooth driving experience.</p>
+                        <div class="flex justify-between items-center mt-4 pt-4 border-t border-gray-50">
+                            <div>
+                                <span class="text-2xl font-bold brand-text-red">₹1,699</span>
+                                <span class="text-gray-400 text-xs">/day</span>
+                            </div>
+                            <button onclick="openBookingModal('Hyundai i20')" class="brand-red text-white p-3 rounded-xl hover:shadow-lg transition">
+                                <i data-lucide="chevron-right" class="w-5 h-5"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Trust Section -->
+    <section class="py-16 brand-dark text-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+                <div class="flex flex-col items-center text-center">
+                    <div class="bg-red-600 p-4 rounded-2xl mb-4">
+                        <i data-lucide="shield-check" class="w-8 h-8 text-white"></i>
+                    </div>
+                    <h4 class="font-bold mb-1">Secure Booking</h4>
+                    <p class="text-xs text-gray-400">100% safe transactions</p>
+                </div>
+                <div class="flex flex-col items-center text-center">
+                    <div class="bg-red-600 p-4 rounded-2xl mb-4">
+                        <i data-lucide="wrench" class="w-8 h-8 text-white"></i>
+                    </div>
+                    <h4 class="font-bold mb-1">Well Maintained</h4>
+                    <p class="text-xs text-gray-400">Regularly serviced fleet</p>
+                </div>
+                <div class="flex flex-col items-center text-center">
+                    <div class="bg-red-600 p-4 rounded-2xl mb-4">
+                        <i data-lucide="map-pin" class="w-8 h-8 text-white"></i>
+                    </div>
+                    <h4 class="font-bold mb-1">Indore Wide</h4>
+                    <p class="text-xs text-gray-400">Multiple pickup points</p>
+                </div>
+                <div class="flex flex-col items-center text-center">
+                    <div class="bg-red-600 p-4 rounded-2xl mb-4">
+                        <i data-lucide="headset" class="w-8 h-8 text-white"></i>
+                    </div>
+                    <h4 class="font-bold mb-1">24/7 Support</h4>
+                    <p class="text-xs text-gray-400">Always here to help</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works -->
+    <section id="how-it-works" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold mb-4">How It Works</h2>
+                <p class="text-gray-500">Rent your ride in three simple steps.</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-12 relative">
+                <div class="hidden md:block absolute top-1/4 left-1/4 right-1/4 h-0.5 border-t-2 border-dashed border-red-100 z-0"></div>
+                
+                <div class="relative z-10 flex flex-col items-center text-center">
+                    <div class="w-16 h-16 rounded-full brand-red text-white flex items-center justify-center font-bold text-xl mb-6 shadow-xl border-4 border-white">1</div>
+                    <h3 class="text-xl font-bold mb-2">Select Vehicle</h3>
+                    <p class="text-gray-500 px-4">Choose from Activa, Bullet, Swift or Thar.</p>
+                </div>
+                
+                <div class="relative z-10 flex flex-col items-center text-center">
+                    <div class="w-16 h-16 rounded-full brand-red text-white flex items-center justify-center font-bold text-xl mb-6 shadow-xl border-4 border-white">2</div>
+                    <h3 class="text-xl font-bold mb-2">Upload ID & Confirm</h3>
+                    <p class="text-gray-500 px-4">Fast digital verification with Aadhar/DL.</p>
+                </div>
+                
+                <div class="relative z-10 flex flex-col items-center text-center">
+                    <div class="w-16 h-16 rounded-full brand-red text-white flex items-center justify-center font-bold text-xl mb-6 shadow-xl border-4 border-white">3</div>
+                    <h3 class="text-xl font-bold mb-2">Pick & Ride</h3>
+                    <p class="text-gray-500 px-4">Collect your keys and enjoy Indore!</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section id="pricing" class="py-20 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold mb-4">Flexible Pricing Plans</h2>
+                <p class="text-gray-500">Save more with our long-term rental options.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="bg-white p-8 rounded-3xl border border-gray-100 card-shadow flex flex-col">
+                    <h3 class="font-bold text-xl mb-2">Daily Rental</h3>
+                    <p class="text-gray-500 text-sm mb-6">Best for quick city errands or one-day sightseeing.</p>
+                    <div class="text-4xl font-bold mb-8">Standard Rate</div>
+                    <ul class="space-y-3 mb-8 flex-grow">
+                        <li class="flex items-center gap-2 text-sm text-gray-600"><i data-lucide="check" class="w-4 h-4 text-green-500"></i> Free Helmet</li>
+                        <li class="flex items-center gap-2 text-sm text-gray-600"><i data-lucide="check" class="w-4 h-4 text-green-500"></i> 100 KM Limit</li>
+                        <li class="flex items-center gap-2 text-sm text-gray-600"><i data-lucide="check" class="w-4 h-4 text-green-500"></i> Local Pickup</li>
+                    </ul>
+                    <button onclick="openBookingModal('Daily Plan')" class="w-full border-2 border-red-600 text-red-600 py-3 rounded-xl font-bold hover:bg-red-600 hover:text-white transition">Book Daily</button>
+                </div>
+
+                <div class="bg-white p-8 rounded-3xl border-4 border-red-600 card-shadow scale-105 relative flex flex-col">
+                    <span class="absolute -top-4 left-1/2 -translate-x-1/2 brand-red text-white px-4 py-1 rounded-full text-xs font-bold uppercase tracking-widest shadow-md">Best Value</span>
+                    <h3 class="font-bold text-xl mb-2">Weekly Rental</h3>
+                    <p class="text-gray-500 text-sm mb-6">Perfect for travelers staying for a week.</p>
+                    <div class="text-4xl font-bold mb-2 text-red-600">Save 15%</div>
+                    <p class="text-xs font-medium text-gray-400 mb-8">Discount applied automatically</p>
+                    <ul class="space-y-3 mb-8 flex-grow">
+                        <li class="flex items-center gap-2 text-sm text-gray-600"><i data-lucide="check" class="w-4 h-4 text-green-500"></i> 2 Helmets</li>
+                        <li class="flex items-center gap-2 text-sm text-gray-600"><i data-lucide="check" class="w-4 h-4 text-green-500"></i> 700 KM Limit</li>
+                        <li class="flex items-center gap-2 text-sm text-gray-600"><i data-lucide="check" class="w-4 h-4 text-green-500"></i> Free Maintenance</li>
+                    </ul>
+                    <button onclick="openBookingModal('Weekly Plan')" class="w-full brand-red text-white py-3 rounded-xl font-bold hover:shadow-lg transition">Book Weekly</button>
+                </div>
+
+                <div class="bg-white p-8 rounded-3xl border border-gray-100 card-shadow flex flex-col">
+                    <h3 class="font-bold text-xl mb-2">Monthly Rental</h3>
+                    <p class="text-gray-500 text-sm mb-6">Best for local residents or long-term workers.</p>
+                    <div class="text-4xl font-bold mb-2 text-red-600">Save 30%</div>
+                    <p class="text-xs font-medium text-gray-400 mb-8">Lowest possible rates</p>
+                    <ul class="space-y-3 mb-8 flex-grow">
+                        <li class="flex items-center gap-2 text-sm text-gray-600"><i data-lucide="check" class="w-4 h-4 text-green-500"></i> Zero Deposit</li>
+                        <li class="flex items-center gap-2 text-sm text-gray-600"><i data-lucide="check" class="w-4 h-4 text-green-500"></i> Unlimited KM</li>
+                        <li class="flex items-center gap-2 text-sm text-gray-600"><i data-lucide="check" class="w-4 h-4 text-green-500"></i> Doorstep Pickup</li>
+                    </ul>
+                    <button onclick="openBookingModal('Monthly Plan')" class="w-full border-2 border-red-600 text-red-600 py-3 rounded-xl font-bold hover:bg-red-600 hover:text-white transition">Book Monthly</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact & Map -->
+    <section id="contact" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col lg:flex-row gap-12">
+                <div class="lg:w-1/2">
+                    <h2 class="text-3xl font-bold mb-6 text-gray-900">Get in Touch</h2>
+                    <p class="text-gray-500 mb-8">Visit us at our main hub in Vijay Nagar or give us a call for instant bookings.</p>
+                    
+                    <div class="space-y-6">
+                        <div class="flex items-start gap-4">
+                            <div class="brand-red p-3 rounded-xl">
+                                <i data-lucide="phone" class="w-5 h-5 text-white"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold">Call Us</h4>
+                                <a href="tel:+919876543210" class="text-gray-600 hover:text-red-600 font-medium">+91 98765 43210</a>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-4">
+                            <div class="brand-red p-3 rounded-xl">
+                                <i data-lucide="message-square" class="w-5 h-5 text-white"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold">WhatsApp</h4>
+                                <a href="https://wa.me/919876543210" target="_blank" class="text-gray-600 hover:text-green-600 font-medium">Chat with us instantly</a>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-4">
+                            <div class="brand-red p-3 rounded-xl">
+                                <i data-lucide="map-pin" class="w-5 h-5 text-white"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold">Our Location</h4>
+                                <p class="text-gray-600">Vijay Nagar, Opposite C21 Mall, Indore, MP 452010</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="lg:w-1/2 h-80 bg-gray-50 rounded-3xl overflow-hidden relative border border-gray-100 shadow-inner group">
+                    <div class="absolute inset-0 bg-red-500/5 group-hover:bg-transparent transition-colors duration-500"></div>
+                    <div class="absolute inset-0 flex flex-col items-center justify-center text-gray-400">
+                        <i data-lucide="map" class="w-12 h-12 mb-2 text-red-200"></i>
+                        <p class="font-bold text-gray-500">Interactive Map</p>
+                        <p class="text-xs mt-1">Vijay Nagar Hub, Indore</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white pt-16 pb-24 md:pb-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
+                <div>
+                    <div class="flex items-center gap-2 mb-6">
+                        <div class="brand-red p-2 rounded-lg">
+                            <i data-lucide="navigation" class="w-6 h-6 text-white"></i>
+                        </div>
+                        <span class="text-xl font-bold tracking-tight">INDORE<span class="brand-text-red">RENTAL</span></span>
+                    </div>
+                    <p class="text-gray-400 text-sm leading-relaxed">
+                        Indore's most reliable car and bike rental service. Helping thousands of locals and tourists explore the city comfortably.
+                    </p>
+                </div>
+                <div>
+                    <h5 class="font-bold mb-6">Quick Links</h5>
+                    <ul class="space-y-4 text-sm text-gray-400">
+                        <li><a href="#" class="hover:text-red-500 transition">Home</a></li>
+                        <li><a href="#vehicles" class="hover:text-red-500 transition">Our Vehicles</a></li>
+                        <li><a href="#pricing" class="hover:text-red-500 transition">Pricing Plans</a></li>
+                        <li><a href="#contact" class="hover:text-red-500 transition">Contact Us</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h5 class="font-bold mb-6">Legal</h5>
+                    <ul class="space-y-4 text-sm text-gray-400">
+                        <li><a href="#" class="hover:text-red-500 transition">Terms & Conditions</a></li>
+                        <li><a href="#" class="hover:text-red-500 transition">Privacy Policy</a></li>
+                        <li><a href="#" class="hover:text-red-500 transition">Refund Policy</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h5 class="font-bold mb-6">Follow Us</h5>
+                    <div class="flex gap-4">
+                        <a href="#" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-red-600 transition">
+                            <i data-lucide="instagram" class="w-5 h-5"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-red-600 transition">
+                            <i data-lucide="facebook" class="w-5 h-5"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-red-600 transition">
+                            <i data-lucide="twitter" class="w-5 h-5"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="pt-8 border-t border-gray-800 text-center text-sm text-gray-500">
+                <p>© 2024 Indore Rental Hub. Clean, Fast & Reliable.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Mobile Bottom CTA -->
+    <div class="md:hidden sticky-cta w-[90%] max-w-sm">
+        <button onclick="openBookingModal('Mobile Quick Book')" class="w-full brand-red text-white py-4 rounded-2xl font-bold shadow-2xl shadow-red-500/20 flex items-center justify-center gap-2">
+            <i data-lucide="zap" class="w-5 h-5"></i> Book Your Ride Now
+        </button>
+    </div>
+
+    <!-- Booking Modal -->
+    <div id="booking-modal" class="modal-overlay fixed inset-0 z-[60] p-4 flex items-center justify-center">
+        <div class="bg-white w-full max-w-md rounded-3xl overflow-hidden shadow-2xl animate-in zoom-in duration-200">
+            <div class="brand-red p-6 flex justify-between items-center text-white">
+                <h3 class="font-bold text-xl">Quick Booking</h3>
+                <button onclick="closeBookingModal()" class="bg-white/20 p-1 rounded-full hover:bg-white/40 transition" aria-label="Close Modal">
+                    <i data-lucide="x" class="w-6 h-6"></i>
+                </button>
+            </div>
+            <div class="p-8">
+                <p id="modal-vehicle-name" class="font-bold text-lg mb-6 text-gray-400">Selected: <span class="text-black">General Inquiry</span></p>
+                <form class="space-y-4" id="booking-form">
+                    <div>
+                        <label class="block text-xs font-bold uppercase text-gray-400 mb-1">Full Name</label>
+                        <input type="text" required class="w-full p-3 bg-gray-50 border border-gray-100 rounded-xl focus:ring-2 focus:ring-red-400 outline-none" placeholder="Enter your name">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold uppercase text-gray-400 mb-1">Phone Number</label>
+                        <input type="tel" required class="w-full p-3 bg-gray-50 border border-gray-100 rounded-xl focus:ring-2 focus:ring-red-400 outline-none" placeholder="+91 00000 00000">
+                    </div>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs font-bold uppercase text-gray-400 mb-1">Date</label>
+                            <input type="date" required class="w-full p-3 bg-gray-50 border border-gray-100 rounded-xl focus:ring-2 focus:ring-red-400 outline-none">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold uppercase text-gray-400 mb-1">Plan</label>
+                            <select class="w-full p-3 bg-gray-50 border border-gray-100 rounded-xl focus:ring-2 focus:ring-red-400 outline-none">
+                                <option>Daily</option>
+                                <option>Weekly</option>
+                                <option>Monthly</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="flex gap-4 mt-4">
+                        <button type="button" onclick="closeBookingModal()" class="flex-1 bg-gray-100 text-gray-600 font-bold py-4 rounded-xl hover:bg-gray-200 transition">
+                            Cancel
+                        </button>
+                        <button type="submit" class="flex-1 brand-red text-white font-bold py-4 rounded-xl hover:bg-red-700 transition shadow-lg shadow-red-100">
+                            Confirm
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Feedback Toast -->
+    <div id="feedback-toast" class="fixed top-8 left-1/2 -translate-x-1/2 z-[70] hidden bg-gray-900 text-white px-6 py-4 rounded-2xl shadow-2xl items-center gap-3 animate-bounce">
+        <i data-lucide="check-circle" class="w-6 h-6 text-green-400"></i>
+        <p class="font-bold">Request received! We'll call you shortly.</p>
+    </div>
+
+    <script>
+        // Initialize Lucide Icons
+        lucide.createIcons();
+
+        // Variables
+        const mobileMenu = document.getElementById('mobile-menu');
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const closeMenuBtn = document.getElementById('close-menu-btn');
+        const mobileLinks = document.querySelectorAll('.mobile-link');
+        const modal = document.getElementById('booking-modal');
+        const modalVehicleName = document.getElementById('modal-vehicle-name');
+        const bookingForm = document.getElementById('booking-form');
+
+        // Functions
+        function toggleMenu() {
+            mobileMenu.classList.toggle('active');
+        }
+
+        function openBookingModal(vehicle) {
+            modalVehicleName.innerHTML = `Selected: <span class="text-black">${vehicle}</span>`;
+            modal.classList.add('modal-active');
+            document.body.style.overflow = 'hidden';
+            if(mobileMenu.classList.contains('active')) toggleMenu();
+        }
+
+        function closeBookingModal() {
+            modal.classList.remove('modal-active');
+            document.body.style.overflow = 'auto';
+        }
+
+        // Event Listeners for Mobile Menu
+        mobileMenuBtn.addEventListener('click', toggleMenu);
+        closeMenuBtn.addEventListener('click', toggleMenu);
+        mobileLinks.forEach(link => link.addEventListener('click', toggleMenu));
+
+        // Close modal on background click
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) closeBookingModal();
+        });
+
+        // Form Submission
+        bookingForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            closeBookingModal();
+            const toast = document.getElementById('feedback-toast');
+            toast.style.display = 'flex';
+            setTimeout(() => {
+                toast.style.display = 'none';
+            }, 3000);
+            bookingForm.reset();
+        });
+    </script>
+</body>
+</html>
